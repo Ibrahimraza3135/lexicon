@@ -69,10 +69,10 @@ export default function Contact() {
               <Mail className="w-12 h-12 text-blue-600 mb-4" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">Email Us</h3>
               <a
-                href="mailto:info@lexicondigital.com"
+                href="mailto:info@lexicondigital.net"
                 className="text-blue-600 font-medium hover:underline"
               >
-                info@lexicondigital.com
+                info@lexicondigital.net
               </a>
               <p className="text-sm text-gray-500">
                 We typically respond within 24 hours
