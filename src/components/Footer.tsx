@@ -51,7 +51,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <h4 className="text-lg font-semibold text-white mb-4">Connect</h4>
             <div className="flex justify-center space-x-4 mb-4">
               <a
-                href="mailto:info@lexicondigital.com"
+                href="mailto:info@lexicondigital.net"
                 className="p-2 bg-gray-800 rounded-full hover:bg-blue-500 transition-all duration-300 transform hover:scale-110"
               >
                 <Mail className="w-5 h-5" />
@@ -61,10 +61,10 @@ export default function Footer({ onNavigate }: FooterProps) {
             <p className="text-sm">
               <strong>Email:</strong>{' '}
               <a
-                href="mailto:info@lexicondigital.com"
+                href="mailto:info@lexicondigital.net"
                 className="hover:text-blue-400 transition-colors"
               >
-                info@lexicondigital.com
+                info@lexicondigital.net
               </a>
             </p>
 
