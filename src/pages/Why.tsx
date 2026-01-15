@@ -8,6 +8,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
+import { Helmet } from 'react-helmet-async';
 
 interface WhyProps {
   onNavigate: (page: string) => void;
@@ -31,7 +32,7 @@ export default function Why({ onNavigate }: WhyProps) {
       icon: AlertCircle,
       title: 'We know what Wikipedia allows (and rejects)',
       description:
-        'From acceptable sources to prohibited content types, we navigate Wikipedia\'s complex guidelines to avoid common pitfalls.',
+        "From acceptable sources to prohibited content types, we navigate Wikipedia's complex guidelines to avoid common pitfalls.",
     },
     {
       icon: CheckCircle,
@@ -55,12 +56,30 @@ export default function Why({ onNavigate }: WhyProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 pt-24 pb-12">
+
+      {/* ================= SEO ================= */}
+      <Helmet>
+        <title>Why Choose Lexicon Digital | Wikipedia Experts</title>
+        <meta
+          name="description"
+          content="Learn why Lexicon Digital is the leading Wikipedia service provider. We ensure your page is compliant, accurate, and maximizes survival chances."
+        />
+        <link rel="canonical" href="https://lexicondigital.net/why" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Why Choose Lexicon Digital | Wikipedia Experts" />
+        <meta
+          property="og:description"
+          content="Expert Wikipedia services for individuals and brands. Understand notability, neutral tone, and content compliance."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Why Do You Need a{' '}
-              <span className="text-blue-600">Wikipedia Expert</span>?
+              Why Do You Need a <span className="text-blue-600">Wikipedia Expert</span>?
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Because Wikipedia Is More Than Just Writing. It’s Rules, Citations & Reputation.
@@ -77,7 +96,7 @@ export default function Why({ onNavigate }: WhyProps) {
               <p className="text-lg md:text-xl leading-relaxed mb-6">
                 Creating a Wikipedia page requires deep knowledge of complex
                 policies, citation standards, and editorial guidelines. A single
-                mistake can result in  rejection.
+                mistake can result in rejection.
               </p>
               <p className="text-lg md:text-xl leading-relaxed">
                 Our team has years of experience navigating these challenges,
@@ -116,29 +135,6 @@ export default function Why({ onNavigate }: WhyProps) {
             ))}
           </div>
         </div>
-            {/* 
-        <AnimatedSection>
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl mb-20">
-            <div className="max-w-4xl mx-auto text-center">
-              <Shield className="w-16 h-16 mx-auto mb-6 text-blue-400" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Our Guarantee
-              </h2>
-              <p className="text-xl leading-relaxed mb-6">
-                We don't promise approvals — we ensure the strongest possible
-                draft for success.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                Wikipedia's editorial community makes the final decision on every
-                article. What we guarantee is a professionally researched,
-                expertly written, and fully compliant submission that maximizes
-                your chances of approval and long-term stability.
-              </p>
-            </div>
-          </div>
-        </AnimatedSection>
-
-        */}
 
         <AnimatedSection>
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl text-center">
