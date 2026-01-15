@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, MapPin, Clock } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
+import { Helmet } from 'react-helmet-async';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -46,6 +47,37 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 pt-24 pb-12">
+
+      {/* ================= SEO ================= */}
+      <Helmet>
+        <title>Contact Lexicon Digital | Wikipedia Page Consultation</title>
+        <meta
+          name="description"
+          content="Get in touch with Lexicon Digital for professional Wikipedia page creation, editing, and notability assessment services."
+        />
+        <link rel="canonical" href="https://lexicondigital.net/contact" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Contact Lexicon Digital" />
+        <meta
+          property="og:description"
+          content="Reach out for expert Wikipedia consulting, article creation, and page monitoring services."
+        />
+        <meta property="og:type" content="website" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {`
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact Lexicon Digital",
+            "description": "Professional Wikipedia consulting services contact page."
+          }
+        `}
+        </script>
+      </Helmet>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Heading */}
