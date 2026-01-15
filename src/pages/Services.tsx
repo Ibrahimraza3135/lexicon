@@ -6,6 +6,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
+import { Helmet } from 'react-helmet-async';
 
 interface ServicesProps {
   onNavigate: (page: string) => void;
@@ -18,7 +19,7 @@ export default function Services({ onNavigate }: ServicesProps) {
       icon: ClipboardCheck,
       title: 'Notability Assessment',
       description:
-        '6–12 hour expert review of your subject\'s eligibility based on Wikipedia\'s strict notability criteria. We analyze existing coverage and provide honest feedback.',
+        "6–12 hour expert review of your subject's eligibility based on Wikipedia's strict notability criteria. We analyze existing coverage and provide honest feedback.",
       features: [
         'Comprehensive media coverage analysis',
         'Expert evaluation report',
@@ -103,6 +104,25 @@ export default function Services({ onNavigate }: ServicesProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24 pb-12">
+
+      {/* ================= SEO ================= */}
+      <Helmet>
+        <title>Services | Lexicon Digital Wikipedia Services</title>
+        <meta
+          name="description"
+          content="Explore Lexicon Digital's professional Wikipedia services: Notability Assessment, Page Creation, Page Rewrite, and Monitoring & Maintenance."
+        />
+        <link rel="canonical" href="https://lexicondigital.net/services" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Services | Lexicon Digital" />
+        <meta
+          property="og:description"
+          content="Professional Wikipedia services for brands and individuals. Ensure your page is compliant, accurate, and visible."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <div className="text-center mb-16">
@@ -165,18 +185,6 @@ export default function Services({ onNavigate }: ServicesProps) {
             );
           })}
         </div>
-            {/* 
-        <AnimatedSection>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg max-w-4xl mx-auto">
-            <p className="text-gray-700 text-center">
-              <strong>Important Note:</strong> We follow Wikipedia guidelines
-              strictly, and we only accept projects that meet notability
-              criteria. Our commitment is to quality and compliance, not
-              guaranteed approvals.
-            </p>
-          </div>
-        </AnimatedSection>
-        */}
 
         <AnimatedSection delay={200}>
           <div className="mt-20 text-center bg-white rounded-3xl p-12 shadow-xl">
