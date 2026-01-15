@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
+import { Helmet } from 'react-helmet-async';
 
 interface FAQProps {
   onNavigate: (page: string) => void;
@@ -13,21 +14,18 @@ export default function FAQ({ onNavigate }: FAQProps) {
     {
       question: 'Can anyone have a Wikipedia page?',
       answer:
-        'No. Only subjects with significant  coverage from reliable sources can be approved. Wikipedia has strict notability guidelines that require substantial third-party coverage in reputable publications. Our notability assessment service can determine if you qualify.',
+        'No. Only subjects with significant coverage from reliable sources can be approved. Wikipedia has strict notability guidelines that require substantial third-party coverage in reputable publications. Our notability assessment service can determine if you qualify.',
     },
-
     {
       question: 'How long does it take to create a Wikipedia page?',
       answer:
         'Typically 2–6 weeks depending on research availability and review times. The timeline includes comprehensive research (1-2 weeks), professional writing and citation (1-2 weeks), and submission/review process (1-2 weeks). Complex subjects with extensive coverage may take longer to ensure thoroughness.',
     },
-   
     {
       question: 'Can you update an existing Wikipedia page?',
       answer:
-        'Yes,  we offer rewrite and maintenance plans for existing Wikipedia pages. Whether your page needs better citations, content updates, neutrality improvements, or structure optimization, our team can enhance it to meet current Wikipedia standards. We also offer ongoing monitoring to keep your page current.',
+        'Yes, we offer rewrite and maintenance plans for existing Wikipedia pages. Whether your page needs better citations, content updates, neutrality improvements, or structure optimization, our team can enhance it to meet current Wikipedia standards. We also offer ongoing monitoring to keep your page current.',
     },
-    
     {
       question: 'How much does it cost to create a Wikipedia page?',
       answer:
@@ -43,7 +41,6 @@ export default function FAQ({ onNavigate }: FAQProps) {
       answer:
         'Wikipedia strongly discourages subjects from writing their own pages due to conflict of interest. Articles written by subjects often contain promotional language, lack neutrality, and violate guidelines. Even if technically allowed, self-written pages face much higher scrutiny and deletion rates. Professional editing ensures compliance and objectivity.',
     },
-   
   ];
 
   const toggleAccordion = (index: number) => {
@@ -52,6 +49,37 @@ export default function FAQ({ onNavigate }: FAQProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24 pb-12">
+
+      {/* ================= SEO ================= */}
+      <Helmet>
+        <title>FAQ | Lexicon Digital Wikipedia Services</title>
+        <meta
+          name="description"
+          content="Frequently Asked Questions about Wikipedia page creation, editing, and notability assessment by Lexicon Digital."
+        />
+        <link rel="canonical" href="https://lexicondigital.net/faq" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="FAQ | Lexicon Digital" />
+        <meta
+          property="og:description"
+          content="All your questions answered about creating, editing, and maintaining a Wikipedia page."
+        />
+        <meta property="og:type" content="website" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {`
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "name": "Lexicon Digital FAQ",
+            "description": "Frequently Asked Questions about professional Wikipedia services."
+          }
+        `}
+        </script>
+      </Helmet>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <div className="text-center mb-16">
@@ -118,24 +146,7 @@ export default function FAQ({ onNavigate }: FAQProps) {
             </button>
           </div>
         </AnimatedSection>
-          {/* 
-        <AnimatedSection delay={400}>
-          <div className="mt-12 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-6 max-w-4xl mx-auto">
-            <h3 className="font-bold text-lg text-gray-900 mb-2">
-              Important Reminder
-            </h3>
-            <p className="text-gray-700">
-              Wikipedia is an independent encyclopedia run by volunteer editors.
-              While we provide professional services to create compliant
-              articles, we do not control Wikipedia's editorial decisions. Our
-              role is to maximize your chances of success through expert
-              preparation and compliance.
-            </p>
-          </div>
-        </AnimatedSection>
-        */}
       </div>
     </div>
   );
 }
-
