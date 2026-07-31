@@ -8,6 +8,7 @@ import {
   TrendingUp,
   Clock,
   ArrowRight,
+  ArrowDown,
   Star,
 } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
@@ -188,13 +189,13 @@ export default function Home({ onNavigate }: HomeProps) {
             <h3 className="text-sm font-semibold tracking-wider text-amber-800 uppercase mb-6 text-center">
               Our Interactive Process
             </h3>
-            <div className="flex flex-wrap justify-center items-center gap-4">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 w-full">
               {steps.map((step, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex flex-col md:flex-row items-center w-full md:w-auto">
                   <div
-                    className={`px-6 py-3 rounded-full font-semibold transition-all duration-500 ${
+                    className={`px-6 py-3 rounded-full font-semibold transition-all duration-500 text-center w-full md:w-auto ${
                       index === currentStep
-                        ? 'bg-black text-amber-400 border border-amber-500/50 scale-110 shadow-lg'
+                        ? 'bg-black text-amber-400 border border-amber-500/50 scale-105 md:scale-110 shadow-lg'
                         : index < currentStep
                         ? 'bg-amber-500/10 text-amber-700 border border-amber-500/10'
                         : 'bg-gray-100 text-gray-400'
@@ -203,13 +204,18 @@ export default function Home({ onNavigate }: HomeProps) {
                     {step}
                   </div>
                   {index < steps.length - 1 && (
-                    <ArrowRight
-                      className={`w-6 h-6 mx-2 transition-colors duration-500 ${
-                        index < currentStep
-                          ? 'text-amber-500'
-                          : 'text-gray-300'
-                      }`}
-                    />
+                    <>
+                      <ArrowRight
+                        className={`hidden md:block w-6 h-6 mx-2 transition-colors duration-500 ${
+                          index < currentStep ? 'text-amber-500' : 'text-gray-300'
+                        }`}
+                      />
+                      <ArrowDown
+                        className={`block md:hidden w-6 h-6 my-2 transition-colors duration-500 ${
+                          index < currentStep ? 'text-amber-500' : 'text-gray-300'
+                        }`}
+                      />
+                    </>
                   )}
                 </div>
               ))}

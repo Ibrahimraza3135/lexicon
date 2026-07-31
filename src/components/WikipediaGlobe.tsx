@@ -312,7 +312,7 @@ export default function WikipediaGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-[420px] h-[420px] mx-auto flex items-center justify-center bg-transparent select-none">
+    <div className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[400px] md:max-w-[420px] h-[280px] xs:h-[320px] sm:h-[400px] md:h-[420px] mx-auto flex items-center justify-center bg-transparent select-none">
       <div className="absolute inset-0 rounded-full border border-amber-500/5 scale-95 pointer-events-none animate-pulse"></div>
       <div className="absolute inset-0 rounded-full border border-dashed border-amber-500/5 scale-90 pointer-events-none rotate-12"></div>
       <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing relative z-10" />
