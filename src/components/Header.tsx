@@ -71,29 +71,29 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
       {/* Header */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-md py-4' : 'bg-transparent py-6'
+          isScrolled ? 'bg-white/95 border-b border-amber-500/10 backdrop-blur-md shadow-md py-4' : 'bg-transparent py-6'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <button
               onClick={() => onNavigate('home')}
-              className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="text-2xl font-extrabold text-black hover:text-amber-600 transition-colors tracking-tight"
             >
-              LexiconDigital
+              Lexicon<span className="text-amber-600">Digital</span>
             </button>
 
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-8 items-center">
               {navItems.map((item) => (
                 <button
                   key={item.page}
                   onClick={() => onNavigate(item.page)}
-                  className={`text-sm font-medium transition-colors ${
+                  className={`text-sm font-semibold transition-all duration-300 relative py-1 ${
                     currentPage === item.page
-                      ? 'text-blue-600'
+                      ? 'text-amber-600 border-b-2 border-amber-500'
                       : isScrolled
-                      ? 'text-gray-700 hover:text-blue-600'
-                      : 'text-gray-800 hover:text-blue-600'
+                      ? 'text-gray-700 hover:text-amber-600'
+                      : 'text-gray-900 hover:text-amber-600'
                   }`}
                 >
                   {item.name}
@@ -102,7 +102,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             </nav>
 
             <button
-              className="md:hidden"
+              className="md:hidden text-black hover:text-amber-600 transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -110,7 +110,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
           </div>
 
           {isMobileMenuOpen && (
-            <nav className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-lg">
+            <nav className="md:hidden mt-4 py-4 bg-white border border-amber-500/10 rounded-lg shadow-lg">
               {navItems.map((item) => (
                 <button
                   key={item.page}
@@ -118,10 +118,10 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                     onNavigate(item.page);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`block w-full text-left px-4 py-2 text-sm font-semibold transition-colors ${
                     currentPage === item.page
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                      ? 'text-amber-600 bg-amber-500/5'
+                      : 'text-gray-700 hover:text-amber-600 hover:bg-amber-500/5'
                   }`}
                 >
                   {item.name}

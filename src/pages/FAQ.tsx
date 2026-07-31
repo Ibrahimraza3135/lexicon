@@ -48,8 +48,7 @@ export default function FAQ({ onNavigate }: FAQProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24 pb-12">
-
+    <div className="min-h-screen bg-gradient-to-br from-white via-[#FAF9F6] to-amber-50/20 pt-24 pb-12">
       {/* ================= SEO ================= */}
       <Helmet>
         <title>FAQ | Lexicon Digital Wikipedia Services</title>
@@ -65,6 +64,7 @@ export default function FAQ({ onNavigate }: FAQProps) {
           property="og:description"
           content="All your questions answered about creating, editing, and maintaining a Wikipedia page."
         />
+        <meta property="og:url" content="https://lexicondigital.net/faq" />
         <meta property="og:type" content="website" />
 
         {/* Structured Data */}
@@ -83,31 +83,31 @@ export default function FAQ({ onNavigate }: FAQProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <div className="text-center mb-16">
-            <HelpCircle className="w-16 h-16 text-blue-600 mx-auto mb-6" />
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <HelpCircle className="w-16 h-16 text-amber-600 mx-auto mb-6" />
+            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Everything you need to know about creating and maintaining your
               Wikipedia presence.
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="max-w-4xl mx-auto mb-12">
+        <div className="max-w-4xl mx-auto mb-16">
           {faqs.map((faq, index) => (
             <AnimatedSection key={index} delay={index * 50}>
               <div className="mb-4">
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full bg-white rounded-2xl p-6 text-left hover:shadow-lg transition-all duration-300 group"
+                  className="w-full bg-white border border-amber-500/10 rounded-2xl p-6 text-left hover:shadow-lg transition-all duration-300 group gold-shadow"
                 >
                   <div className="flex justify-between items-start gap-4">
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors flex-1">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors flex-1">
                       {faq.question}
                     </h3>
                     <ChevronDown
-                      className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${
+                      className={`w-6 h-6 text-amber-600 flex-shrink-0 transition-transform duration-300 ${
                         openIndex === index ? 'rotate-180' : ''
                       }`}
                     />
@@ -119,7 +119,7 @@ export default function FAQ({ onNavigate }: FAQProps) {
                         : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="text-gray-700 leading-relaxed text-base md:text-lg">
+                    <p className="text-gray-600 leading-relaxed text-base md:text-lg">
                       {faq.answer}
                     </p>
                   </div>
@@ -130,17 +130,17 @@ export default function FAQ({ onNavigate }: FAQProps) {
         </div>
 
         <AnimatedSection delay={300}>
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="bg-gradient-to-br from-zinc-950 to-black border border-amber-500/20 rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">
               Still Have Questions?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
               Our team is here to provide personalized answers and guidance for
               your specific situation.
             </p>
             <button
               onClick={() => onNavigate('contact')}
-              className="px-10 py-4 bg-white text-blue-600 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
+              className="px-10 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-black rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
             >
               Get in Touch
             </button>

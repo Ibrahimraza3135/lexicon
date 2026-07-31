@@ -55,8 +55,7 @@ export default function Why({ onNavigate }: WhyProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 pt-24 pb-12">
-
+    <div className="min-h-screen bg-gradient-to-br from-white via-[#FAF9F6] to-amber-50/20 pt-24 pb-12">
       {/* ================= SEO ================= */}
       <Helmet>
         <title>Why Choose Lexicon Digital | Wikipedia Experts</title>
@@ -72,14 +71,15 @@ export default function Why({ onNavigate }: WhyProps) {
           property="og:description"
           content="Expert Wikipedia services for individuals and brands. Understand notability, neutral tone, and content compliance."
         />
+        <meta property="og:url" content="https://lexicondigital.net/why" />
         <meta property="og:type" content="website" />
       </Helmet>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Why Do You Need a <span className="text-blue-600">Wikipedia Expert</span>?
+            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
+              Why Do You Need a <span className="text-gold-gradient font-extrabold">Wikipedia Expert</span>?
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Because Wikipedia Is More Than Just Writing. It’s Rules, Citations & Reputation.
@@ -89,16 +89,16 @@ export default function Why({ onNavigate }: WhyProps) {
 
         <AnimatedSection delay={200}>
           <div className="max-w-5xl mx-auto mb-20">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <div className="bg-gradient-to-br from-zinc-950 to-black border border-amber-500/20 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 tracking-tight">
                 Wikipedia Is Not Like Other Platforms
               </h2>
-              <p className="text-lg md:text-xl leading-relaxed mb-6">
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
                 Creating a Wikipedia page requires deep knowledge of complex
                 policies, citation standards, and editorial guidelines. A single
                 mistake can result in rejection.
               </p>
-              <p className="text-lg md:text-xl leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
                 Our team has years of experience navigating these challenges,
                 ensuring your article meets every requirement for approval and
                 long-term stability.
@@ -109,7 +109,7 @@ export default function Why({ onNavigate }: WhyProps) {
 
         <div className="mb-20">
           <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+            <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-12 tracking-tight">
               What Sets Us Apart
             </h2>
           </AnimatedSection>
@@ -117,12 +117,12 @@ export default function Why({ onNavigate }: WhyProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {reasons.map((reason, index) => (
               <AnimatedSection key={index} delay={index * 100}>
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-all duration-300">
-                    <reason.icon className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
+                <div className="bg-white border border-transparent rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:border-amber-500/10 transition-all duration-500 transform hover:-translate-y-2 group">
+                  <div className="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-black group-hover:border group-hover:border-amber-500/20 transition-all duration-300">
+                    <reason.icon className="w-8 h-8 text-amber-600 group-hover:text-amber-400 transition-colors duration-300" />
                   </div>
                   <div className="flex items-start gap-3 mb-4">
-                    <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
                     <h3 className="text-xl font-bold text-gray-900">
                       {reason.title}
                     </h3>
@@ -137,41 +137,41 @@ export default function Why({ onNavigate }: WhyProps) {
         </div>
 
         <AnimatedSection>
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <div className="bg-white border border-amber-500/10 rounded-3xl p-8 md:p-12 shadow-xl text-center gold-shadow">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 tracking-tight">
               The Cost of Amateur Mistakes
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div className="p-6">
-                <div className="text-4xl font-bold text-red-600 mb-2">78%</div>
-                <p className="text-gray-600">
+                <div className="text-4xl md:text-5xl font-extrabold text-amber-700 mb-2">78%</div>
+                <p className="text-gray-600 font-medium">
                   of amateur Wikipedia articles get deleted within 30 days
                 </p>
               </div>
               <div className="p-6">
-                <div className="text-4xl font-bold text-red-600 mb-2">
+                <div className="text-4xl md:text-5xl font-extrabold text-amber-700 mb-2">
                   Weeks
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 font-medium">
                   wasted on rejected drafts without expert guidance
                 </p>
               </div>
               <div className="p-6">
-                <div className="text-4xl font-bold text-red-600 mb-2">
+                <div className="text-4xl md:text-5xl font-extrabold text-amber-700 mb-2">
                   Permanent
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 font-medium">
                   damage to your reputation from poorly written content
                 </p>
               </div>
             </div>
-            <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               Don't risk your reputation with trial and error. Get it right the
               first time with professional expertise.
             </p>
             <button
               onClick={() => onNavigate('contact')}
-              className="px-10 py-5 bg-blue-600 text-white rounded-lg font-bold text-xl hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+              className="px-10 py-5 bg-black text-amber-400 hover:text-amber-300 border border-amber-500/20 rounded-lg font-bold text-xl hover:bg-zinc-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
             >
               Talk to an Expert
               <ArrowRight className="w-6 h-6" />

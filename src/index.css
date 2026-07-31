@@ -78,6 +78,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FAF9F6;
+  color: #121212;
 }
 
 @keyframes spin {
@@ -96,3 +98,38 @@ body {
 .border-3 {
   border-width: 3px;
 }
+
+/* Luxury Gold & Black Design Utilities (High Contrast for White Backgrounds) */
+.bg-ash-white {
+  background-color: #FAF9F6;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #785A18 0%, #A27E2D 45%, #C29A38 75%, #785A18 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #785A18 0%, #A27E2D 50%, #59420F 100%);
+}
+
+.bg-gold-hover {
+  background: linear-gradient(135deg, #59420F 0%, #A27E2D 50%, #785A18 100%);
+}
+
+.border-gold {
+  border-color: #A27E2D;
+}
+
+.gold-shadow {
+  box-shadow: 0 4px 20px -2px rgba(162, 126, 45, 0.12);
+}
+
+.gold-shadow-hover:hover {
+  box-shadow: 0 10px 25px -5px rgba(162, 126, 45, 0.25);
+  transform: translateY(-4px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
