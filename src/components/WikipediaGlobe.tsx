@@ -4,71 +4,53 @@ import * as THREE from 'three';
 export default function WikipediaGlobe() {
   const mountRef = useRef<HTMLDivElement>(null);
 
-  // Helper function to create high-resolution, 360° seamless Wikipedia jigsaw puzzle texture
+  // Helper function to create the flat Wikipedia jigsaw texture canvas
   const createGlobeTexture = () => {
     const texCanvas = document.createElement('canvas');
-    texCanvas.width = 4096;
-    texCanvas.height = 2048;
-    const tCtx = texCanvas.getContext('2d', { alpha: true });
+    texCanvas.width = 2048;
+    texCanvas.height = 1024;
+    const tCtx = texCanvas.getContext('2d');
     if (!tCtx) return texCanvas;
 
-    tCtx.clearRect(0, 0, 4096, 2048);
+    // Transparent background so openings look hollow
+    tCtx.clearRect(0, 0, 2048, 1024);
 
     const rows = 8;
-    const cols = 16;
-    const cellW = 4096 / cols;
-    const cellH = 2048 / rows;
+    const cols = 12;
+    const cellW = 2048 / cols;
+    const cellH = 1024 / rows;
 
-    // Interlocking tabs mapping for consistent puzzle joints across 360°
-    const getHTab = (r: number, c: number) => ((r * 5 + c * 7) % 2 === 0 ? 1 : -1);
-    const getVTab = (r: number, c: number) => ((r * 11 + c * 3) % 2 === 0 ? 1 : -1);
+    // Interlocking tabs mapping
+    const hTabs = Array.from({ length: rows }, () =>
+      Array.from({ length: cols }, () => (Math.random() > 0.5 ? 1 : -1))
+    );
+    const vTabs = Array.from({ length: rows + 1 }, () =>
+      Array.from({ length: cols }, () => (Math.random() > 0.5 ? 1 : -1))
+    );
 
-    // Multilingual Wikipedia symbols arranged around the globe
     const symbolMap: Record<string, string> = {
-      // Upper band
       '2,2': 'W',
-      '2,4': 'ウィ',
-      '2,6': '維',
-      '2,8': 'ው',
-      '2,10': 'Ω',
-      '2,13': 'Й',
-      // Mid-upper band
+      '2,5': '25', // Special blue piece
+      '2,8': '維',
       '3,1': 'উ',
-      '3,3': 'ви',
-      '3,5': 'वि',
-      '3,7': '25', // Anniversary highlight piece
-      '3,9': '위',
-      '3,11': 'و',
-      '3,14': 'ת',
-      // Mid-lower band
-      '4,0': 'ሀ',
-      '4,2': 'Ա',
-      '4,4': 'ვ',
-      '4,6': 'วิ',
-      '4,8': 'ي',
-      '4,10': 'ק',
-      '4,12': 'ر',
-      '4,15': 'ழ',
-      // Lower band
-      '5,1': 'И',
-      '5,3': 'उ',
-      '5,5': 'ᐁ',
-      '5,7': 'ವಿ',
-      '5,9': 'ഉ',
-      '5,11': 'W',
-      '5,13': 'ד',
-      '5,15': 'శ',
+      '3,4': 'वि',
+      '3,7': 'ви',
+      '3,10': '위',
+      '4,3': 'ウィ',
+      '4,6': 'و',
+      '4,9': 'ת',
+      '5,2': 'Ա',
+      '5,5': 'ვ',
+      '5,8': 'วิ',
+      '6,4': 'И',
+      '6,7': 'उ',
+      '6,10': 'W'
     };
 
-    // Helper: Draws curved jigsaw interlocking tabs
-    const drawEdge = (
-      ctx: CanvasRenderingContext2D,
-      p0: { x: number; y: number },
-      p1: { x: number; y: number },
-      tabType: number
-    ) => {
+    // Draws puzzle edge with Bezier bulb tabs
+    const drawEdge = (p0: { x: number; y: number }, p1: { x: number; y: number }, tabType: number) => {
       if (tabType === 0) {
-        ctx.lineTo(p1.x, p1.y);
+        tCtx.lineTo(p1.x, p1.y);
         return;
       }
       const dx = p1.x - p0.x;
@@ -82,34 +64,34 @@ export default function WikipediaGlobe() {
       const mx = (p0.x + p1.x) / 2;
       const my = (p0.y + p1.y) / 2;
 
-      const tabR = dist * 0.09;
-      const tabH = dist * 0.12 * tabType;
+      const tabR = dist * 0.13;
+      const tabH = dist * 0.16 * tabType;
 
-      ctx.lineTo(mx - ux * tabR * 1.15, my - uy * tabR * 1.15);
-
+      tCtx.lineTo(mx - ux * tabR * 1.2, my - uy * tabR * 1.2);
+      
       const cx = mx + px * tabH;
       const cy = my + py * tabH;
-      const c1x = mx - ux * tabR * 0.8 + px * tabH * 0.25;
-      const c1y = my - uy * tabR * 0.8 + py * tabH * 0.25;
-      const c2x = cx - ux * tabR * 1.35;
-      const c2y = cy - uy * tabR * 1.35;
-      const c3x = cx + ux * tabR * 1.35;
-      const c3y = cy + uy * tabR * 1.35;
-      const c4x = mx + ux * tabR * 0.8 + px * tabH * 0.25;
-      const c4y = my + uy * tabR * 0.8 + py * tabH * 0.25;
+      const c1x = mx - ux * tabR + px * tabH * 0.3;
+      const c1y = my - uy * tabR + py * tabH * 0.3;
+      const c2x = cx - ux * tabR * 1.45;
+      const c2y = cy - uy * tabR * 1.45;
+      const c3x = cx + ux * tabR * 1.45;
+      const c3y = cy + uy * tabR * 1.45;
+      const c4x = mx + ux * tabR + px * tabH * 0.3;
+      const c4y = my + uy * tabR + py * tabH * 0.3;
 
-      ctx.bezierCurveTo(c1x, c1y, c2x, c2y, cx, cy);
-      ctx.bezierCurveTo(c3x, c3y, c4x, c4y, mx + ux * tabR * 1.15, my + uy * tabR * 1.15);
-      ctx.lineTo(p1.x, p1.y);
+      tCtx.bezierCurveTo(c1x, c1y, c2x, c2y, cx, cy);
+      tCtx.bezierCurveTo(c3x, c3y, c4x, c4y, mx + ux * tabR * 1.2, my + uy * tabR * 1.2);
+      tCtx.lineTo(p1.x, p1.y);
     };
 
-    // Render individual 3D puzzle pieces
+    // Draw grid of puzzle pieces
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        // Open jagged crown top (Wikipedia signature missing puzzle pieces)
+        // Jagged cut top/bottom opening like standard Wikipedia logo
         if (r === 0) continue;
-        if (r === 1 && (c === 0 || c === 3 || c === 5 || c === 8 || c === 11 || c === 14)) continue;
-        if (r === rows - 1 && (c % 2 === 1 || c === 4 || c === 10)) continue;
+        if (r === 1 && c % 3 === 0) continue;
+        if (r === rows - 1 && c % 2 === 1) continue;
 
         const x0 = c * cellW;
         const y0 = r * cellH;
@@ -121,33 +103,30 @@ export default function WikipediaGlobe() {
         const p2 = { x: x1, y: y1 };
         const p3 = { x: x0, y: y1 };
 
-        const tTab = r > 1 ? -getHTab(r - 1, c) : 0;
-        const bTab = r < rows - 2 ? getHTab(r, c) : 0;
-        const lTab = -getVTab(r, (c - 1 + cols) % cols);
-        const rTab = getVTab(r, c);
+        const tTab = r > 1 ? -hTabs[r - 1][c] : 0;
+        const bTab = r < rows - 2 ? hTabs[r][c] : 0;
+        const lTab = -vTabs[r][(c - 1 + cols) % cols];
+        const rTab = vTabs[r][c];
 
-        tCtx.save();
         tCtx.beginPath();
         tCtx.moveTo(p0.x, p0.y);
-        drawEdge(tCtx, p0, p1, tTab);
-        drawEdge(tCtx, p1, p2, rTab);
-        drawEdge(tCtx, p2, p3, bTab);
-        drawEdge(tCtx, p3, p0, lTab);
+        drawEdge(p0, p1, tTab);
+        drawEdge(p1, p2, rTab);
+        drawEdge(p2, p3, bTab);
+        drawEdge(p3, p0, lTab);
         tCtx.closePath();
 
-        const isSpecial25 = r === 3 && c === 7;
+        const isSpecial25 = (r === 2 && c === 5);
         if (isSpecial25) {
           tCtx.fillStyle = '#0B5FA5'; // Wikipedia Anniversary Blue
         } else {
-          tCtx.fillStyle = '#F8F9FA'; // Authentic smooth Wikipedia pearl white
+          tCtx.fillStyle = '#FFFFFF'; // Clean white pieces (as user requested)
         }
         tCtx.fill();
 
-        // Subtle, elegant light grey puzzle grooves
-        tCtx.strokeStyle = isSpecial25 ? '#064478' : '#C8C9CE';
-        tCtx.lineWidth = 3.5;
-        tCtx.lineCap = 'round';
-        tCtx.lineJoin = 'round';
+        // Stroke puzzle gaps
+        tCtx.strokeStyle = '#D0D0D2';
+        tCtx.lineWidth = 4;
         tCtx.stroke();
 
         // Draw multilingual symbols
@@ -158,18 +137,15 @@ export default function WikipediaGlobe() {
 
           if (isSpecial25) {
             tCtx.fillStyle = '#FFFFFF';
-            tCtx.font = 'italic bold 94px "Linux Libertine", "Georgia", serif';
+            tCtx.font = 'italic bold 58px "Georgia", serif';
           } else {
-            tCtx.fillStyle = '#232528';
-            tCtx.font = 'normal 88px "Linux Libertine", "Hoefler Text", "Georgia", "Songti SC", "Hiragino Mincho ProN", "Times New Roman", serif';
+            tCtx.fillStyle = '#202020';
+            tCtx.font = 'normal 52px "Georgia", serif';
           }
-
           tCtx.textAlign = 'center';
           tCtx.textBaseline = 'middle';
           tCtx.fillText(symbol, tx, ty);
         }
-
-        tCtx.restore();
       }
     }
 
@@ -185,86 +161,59 @@ export default function WikipediaGlobe() {
 
     // 1. Create Scene & Camera
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = 310;
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.z = 295;
 
-    // 2. Anti-Aliased WebGL 3D Renderer
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
-    });
+    // 2. WebGL Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.5));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mount.appendChild(renderer.domElement);
 
-    // 3. Texture setup with Max Anisotropy for sharp angles
+    // 3. Canvas Texture
     const canvasTexture = createGlobeTexture();
     const texture = new THREE.CanvasTexture(canvasTexture);
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.generateMipmaps = true;
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-    // 4. Globe Object Group (Tilted to iconic Wikipedia axial angle)
-    const globeGroup = new THREE.Group();
-    globeGroup.rotation.z = -0.15; // Natural Wikipedia axial tilt
-    globeGroup.rotation.x = 0.08;
-    scene.add(globeGroup);
-
-    // Outer puzzle globe with high geometry density (128 x 128)
-    const geometry = new THREE.SphereGeometry(110, 128, 128);
+    // 4. Create Globe Spheres (Mesh)
+    // Outer white puzzle sphere
+    const geometry = new THREE.SphereGeometry(110, 64, 64);
     const material = new THREE.MeshStandardMaterial({
       map: texture,
-      roughness: 0.95,
-      metalness: 0.0,
+      roughness: 0.18,
+      metalness: 0.05,
       transparent: true,
       side: THREE.DoubleSide,
     });
     const globe = new THREE.Mesh(geometry, material);
-    globeGroup.add(globe);
+    scene.add(globe);
 
-    // Inner dark hollow sphere visible through crown jigsaw gaps
-    const innerGeom = new THREE.SphereGeometry(108.6, 64, 64);
+    // Inner dark hollow sphere
+    const innerGeom = new THREE.SphereGeometry(109, 32, 32);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x1f2124,
-      roughness: 0.95,
-      metalness: 0.0,
+      color: 0x1d1d1f,
+      roughness: 0.8,
+      metalness: 0.1,
     });
     const innerGlobe = new THREE.Mesh(innerGeom, innerMat);
-    globeGroup.add(innerGlobe);
+    scene.add(innerGlobe);
 
-    // 5. Studio Multi-Point Lighting (Smooth 3D depth, no glare spots)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+    // 5. Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambientLight);
 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xdfe3ea, 0.5);
-    scene.add(hemiLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    dirLight.position.set(-150, 200, 150);
+    scene.add(dirLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.45);
-    keyLight.position.set(-180, 220, 180);
-    scene.add(keyLight);
-
-    const fillLight = new THREE.DirectionalLight(0xf5f7fb, 0.25);
-    fillLight.position.set(200, -100, 100);
-    scene.add(fillLight);
-
-    // 6. Interactive 3D Dragging & Physics Momentum
+    // 6. Interaction Event Handlers
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-    let velocityX = 0;
-    let velocityY = 0;
-    const idleSpeedY = 0.0035; // Continuous smooth 360° rotation
-    const damping = 0.93;
+    const defaultSpeedY = 0.0035;
+    const defaultSpeedX = 0.0003;
 
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
-      velocityX = 0;
-      velocityY = 0;
       previousMousePosition = { x: e.clientX, y: e.clientY };
     };
 
@@ -273,11 +222,8 @@ export default function WikipediaGlobe() {
       const deltaX = e.clientX - previousMousePosition.x;
       const deltaY = e.clientY - previousMousePosition.y;
 
-      velocityX = deltaX * 0.005;
-      velocityY = deltaY * 0.005;
-
-      globe.rotation.y += velocityX;
-      globe.rotation.x += velocityY;
+      globe.rotation.y += deltaX * 0.005;
+      globe.rotation.x += deltaY * 0.005;
 
       previousMousePosition = { x: e.clientX, y: e.clientY };
     };
@@ -289,8 +235,6 @@ export default function WikipediaGlobe() {
     const onTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
         isDragging = true;
-        velocityX = 0;
-        velocityY = 0;
         previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     };
@@ -300,11 +244,8 @@ export default function WikipediaGlobe() {
       const deltaX = e.touches[0].clientX - previousMousePosition.x;
       const deltaY = e.touches[0].clientY - previousMousePosition.y;
 
-      velocityX = deltaX * 0.005;
-      velocityY = deltaY * 0.005;
-
-      globe.rotation.y += velocityX;
-      globe.rotation.x += velocityY;
+      globe.rotation.y += deltaX * 0.005;
+      globe.rotation.x += deltaY * 0.005;
 
       previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     };
@@ -320,23 +261,13 @@ export default function WikipediaGlobe() {
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd);
 
-    // 7. Continuous 3D Animation Loop
+    // 7. Render Loop
     let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
       if (!isDragging) {
-        velocityX *= damping;
-        velocityY *= damping;
-
-        if (Math.abs(velocityX) < 0.0001) velocityX = 0;
-        if (Math.abs(velocityY) < 0.0001) velocityY = 0;
-
-        globe.rotation.y += idleSpeedY + velocityX;
-        globe.rotation.x += velocityY;
-
-        // Smoothly restore horizontal axis
-        globe.rotation.x *= 0.98;
+        globe.rotation.y += defaultSpeedY;
       }
 
       innerGlobe.rotation.copy(globe.rotation);
@@ -345,16 +276,14 @@ export default function WikipediaGlobe() {
 
     animate();
 
-    // 8. Responsive Resize Observer
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
+    // 8. Size Resize Handler
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
         const w = entry.contentRect.width;
         const h = entry.contentRect.height;
-        if (w > 0 && h > 0) {
-          renderer.setSize(w, h);
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-        }
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
       }
     });
     resizeObserver.observe(mount);
@@ -365,7 +294,7 @@ export default function WikipediaGlobe() {
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
       }
-
+      
       renderer.domElement.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
@@ -383,15 +312,10 @@ export default function WikipediaGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-[300px] xs:max-w-[340px] sm:max-w-[420px] md:max-w-[460px] h-[300px] xs:h-[340px] sm:h-[420px] md:h-[460px] mx-auto flex items-center justify-center bg-transparent select-none">
-      {/* Ambient background glow aura */}
-      <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-amber-500/10 via-transparent to-blue-500/5 filter blur-3xl pointer-events-none" />
-      <div className="absolute inset-0 rounded-full border border-gray-200/30 scale-95 pointer-events-none" />
-      <div
-        ref={mountRef}
-        className="w-full h-full cursor-grab active:cursor-grabbing relative z-10 transition-transform duration-300 hover:scale-[1.02]"
-        title="Interactive 3D Wikipedia Globe - Drag to rotate"
-      />
+    <div className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[400px] md:max-w-[420px] h-[280px] xs:h-[320px] sm:h-[400px] md:h-[420px] mx-auto flex items-center justify-center bg-transparent select-none">
+      <div className="absolute inset-0 rounded-full border border-amber-500/5 scale-95 pointer-events-none animate-pulse"></div>
+      <div className="absolute inset-0 rounded-full border border-dashed border-amber-500/5 scale-90 pointer-events-none rotate-12"></div>
+      <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing relative z-10" />
     </div>
   );
 }
