@@ -180,8 +180,8 @@ export default function WikipediaGlobe() {
     const geometry = new THREE.SphereGeometry(110, 64, 64);
     const material = new THREE.MeshStandardMaterial({
       map: texture,
-      roughness: 0.18,
-      metalness: 0.05,
+      roughness: 1.0,
+      metalness: 0.0,
       transparent: true,
       side: THREE.DoubleSide,
     });
@@ -192,17 +192,17 @@ export default function WikipediaGlobe() {
     const innerGeom = new THREE.SphereGeometry(109, 32, 32);
     const innerMat = new THREE.MeshStandardMaterial({
       color: 0x1d1d1f,
-      roughness: 0.8,
-      metalness: 0.1,
+      roughness: 0.9,
+      metalness: 0.0,
     });
     const innerGlobe = new THREE.Mesh(innerGeom, innerMat);
     scene.add(innerGlobe);
 
     // 5. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.4);
     dirLight.position.set(-150, 200, 150);
     scene.add(dirLight);
 
